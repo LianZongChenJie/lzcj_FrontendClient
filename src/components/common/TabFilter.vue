@@ -23,15 +23,21 @@ function selectTab(value: string) {
     <button
       v-for="tab in tabs"
       :key="tab.value"
-      class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
+      class="relative px-5 py-2 rounded-full text-sm font-medium tracking-wider border transition-all duration-300"
       :class="
         modelValue === tab.value
-          ? 'bg-primary-600 text-white shadow-md'
-          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          ? 'text-white border-transparent bg-gradient-to-r from-primary-600 to-cyan-500 shadow-glow'
+          : 'bg-white/80 text-gray-600 border-gray-200 hover:border-primary-300 hover:text-primary-600 hover:shadow-glow-sm'
       "
       @click="selectTab(tab.value)"
     >
-      {{ tab.label }}
+      <span class="flex items-center gap-1.5">
+        <span
+          v-if="modelValue === tab.value"
+          class="w-1 h-1 rounded-full bg-white animate-pulse"
+        ></span>
+        {{ tab.label }}
+      </span>
     </button>
   </div>
 </template>

@@ -32,7 +32,9 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // 子路径部署时，Vite 会把 base 注入为 import.meta.env.BASE_URL，
+  // 路由需与其保持一致，否则刷新页面 404
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to) {
     if (to.hash) {

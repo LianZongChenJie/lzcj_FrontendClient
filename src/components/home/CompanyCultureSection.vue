@@ -43,18 +43,23 @@ onMounted(loadCulture)
 </script>
 
 <template>
-  <section id="company-culture" class="py-16 lg:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="company-culture" class="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-dots-light"></div>
+    <div class="absolute -top-24 right-0 w-80 h-80 rounded-full bg-primary-100/60 blur-3xl"></div>
+    <div class="absolute -bottom-24 left-0 w-80 h-80 rounded-full bg-cyan-100/50 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="企业文化" subtitle="我们的精神内核与行为准则" />
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div
           v-for="item in cultureItems"
           :key="item.key"
-          class="text-center p-8 rounded-2xl bg-gradient-to-br from-primary-50 to-blue-50 hover:shadow-lg transition-shadow duration-300"
+          class="group text-center p-8 rounded-2xl grad-border tech-corner tech-corner-hover hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
         >
-          <div class="w-16 h-16 mx-auto mb-5 bg-primary-100 rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gradient-to-br from-primary-500 to-cyan-400 flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-shadow duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.icon" />
             </svg>
           </div>

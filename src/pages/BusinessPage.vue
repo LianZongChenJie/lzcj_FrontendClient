@@ -52,7 +52,6 @@ onMounted(() => {
       subtitle="核心技术自主研发，打造优质产品"
       :products="selfProducts"
       type="self"
-      dark
     />
     <ProductSection
       title="代理产品"

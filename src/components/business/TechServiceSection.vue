@@ -30,6 +30,7 @@ const iconMap: Record<string, string> = {
     <!-- 科技感背景装饰 -->
     <div class="absolute inset-0 tech-dots-light"></div>
     <div class="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-primary-100/60 blur-3xl"></div>
+    <div class="absolute -bottom-24 left-0 w-80 h-80 rounded-full bg-cyan-100/50 blur-3xl"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle :title="title" :subtitle="subtitle" />
@@ -38,10 +39,10 @@ const iconMap: Record<string, string> = {
         <div
           v-for="service in services"
           :key="service.id"
-          class="p-6 rounded-xl bg-gradient-to-br from-primary-50/70 to-blue-50 hover:from-primary-50 hover:to-blue-100/70 transition-colors duration-300 border border-primary-100/60 hover:border-primary-200"
+          class="group p-6 rounded-xl grad-border tech-corner tech-corner-hover hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
         >
-          <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-500 to-cyan-400 flex items-center justify-center mb-4 shadow-glow-sm group-hover:shadow-glow transition-shadow duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="iconMap[service.icon] || iconMap['ri-service-line']" />
             </svg>
           </div>

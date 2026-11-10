@@ -15,38 +15,44 @@ const props = withDefaults(
 const contacts = computed(() => props.contacts)
 
 const cityColors: Record<string, string> = {
-  北京: 'from-blue-500 to-blue-600',
-  天津: 'from-cyan-500 to-cyan-600',
-  成都: 'from-green-500 to-green-600',
-  云南: 'from-amber-500 to-amber-600'
+  北京: 'from-blue-500 to-cyan-400',
+  天津: 'from-cyan-500 to-teal-400',
+  成都: 'from-green-500 to-emerald-400',
+  云南: 'from-amber-500 to-orange-400'
 }
 </script>
 
 <template>
-  <section id="contact" class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="contact" class="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-dots-light"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="联系方式" subtitle="四地分公司，期待与您相遇" />
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           v-for="contact in contacts"
           :key="contact.city"
-          class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+          class="group bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:border-primary-200 hover:shadow-glow transition-all duration-300 tech-corner tech-corner-hover"
         >
           <!-- 城市头部 -->
           <div
             v-if="contact.themeColor"
-            class="h-2"
+            class="h-1.5"
             :style="{ backgroundColor: contact.themeColor }"
           ></div>
           <div
             v-else
-            class="h-2 bg-gradient-to-r"
+            class="h-1.5 bg-gradient-to-r shadow-glow-sm"
             :class="cityColors[contact.city] || 'from-gray-500 to-gray-600'"
           ></div>
 
           <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">{{ contact.city }}</h3>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-1.5 h-1.5 rotate-45 bg-gradient-to-br from-primary-500 to-cyan-400 shadow-glow-sm"></span>
+              <h3 class="text-xl font-bold text-gray-800">{{ contact.city }}</h3>
+            </div>
 
             <div class="space-y-3">
               <div class="flex items-start gap-3">

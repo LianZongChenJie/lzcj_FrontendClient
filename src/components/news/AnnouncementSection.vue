@@ -33,21 +33,25 @@ onMounted(loadAnnouncements)
 </script>
 
 <template>
-  <section id="announcements" class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="announcements" class="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-dots-light"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="公司公告" subtitle="重要通知，第一时间知晓" />
 
       <div class="space-y-3">
         <div
           v-for="item in announcements"
           :key="item.id"
-          class="group bg-white rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300 cursor-pointer"
+          class="group bg-white rounded-xl p-5 border border-gray-100 hover:border-primary-200 hover:shadow-glow transition-all duration-300 cursor-pointer"
           :class="item.important ? 'border-l-4 border-l-red-400' : ''"
           @click="openDetail(item)"
         >
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
+                <span v-if="!item.important" class="w-1 h-1 rotate-45 bg-primary-400 shrink-0"></span>
                 <h3
                   class="text-base font-semibold truncate transition-colors"
                   :class="item.important ? 'text-red-600' : 'text-gray-800 group-hover:text-primary-600'"
@@ -56,14 +60,14 @@ onMounted(loadAnnouncements)
                 </h3>
                 <span
                   v-if="item.important"
-                  class="shrink-0 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full"
+                  class="shrink-0 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full border border-red-200/60"
                 >
                   重要
                 </span>
               </div>
               <p class="text-gray-500 text-sm line-clamp-1">{{ item.summary }}</p>
             </div>
-            <span class="shrink-0 text-gray-400 text-sm">{{ item.date }}</span>
+            <span class="shrink-0 text-gray-400 text-sm font-mono">{{ item.date }}</span>
           </div>
         </div>
       </div>
@@ -76,10 +80,10 @@ onMounted(loadAnnouncements)
     >
       <div v-if="currentAnnouncement">
         <div class="flex items-center gap-4 text-sm text-gray-400 mb-4">
-          <span>{{ currentAnnouncement.date }}</span>
+          <span class="font-mono">{{ currentAnnouncement.date }}</span>
           <span
             v-if="currentAnnouncement.important"
-            class="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full"
+            class="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full border border-red-200/60"
           >
             重要公告
           </span>

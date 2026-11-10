@@ -16,33 +16,126 @@
   section {
     @apply scroll-mt-[80px];
   }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.25);
+  }
 }
 
-/* 科技感背景 */
+/* 科幻风工具类 */
 @layer utilities {
-  /* 网格背景（深色底） */
-  .tech-grid-dark {
-    background-image:
-      linear-gradient(rgba(96, 165, 250, 0.12) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(96, 165, 250, 0.12) 1px, transparent 1px);
-    background-size: 44px 44px;
+  /* ===== 深空背景 ===== */
+  .bg-deep-space {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(37, 99, 235, 0.2), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 100%, rgba(34, 211, 238, 0.1), transparent 60%),
+      linear-gradient(180deg, #020616 0%, #041128 55%, #01030a 100%);
   }
 
-  /* 科技感网格背景（浅色底） */
+  /* ===== 科技网格（深色底） ===== */
+  .tech-grid-dark {
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+  }
+
+  /* ===== 科技网格（浅色底） ===== */
   .tech-grid-light {
     background-image:
       linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
       linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
     background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 20%, black 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 85% 75% at 50% 20%, black 30%, transparent 80%);
   }
 
-  /* 科技感点阵背景（浅色底） */
+  /* ===== 科技点阵（浅色底） ===== */
   .tech-dots-light {
     background-image: radial-gradient(rgba(59, 130, 246, 0.18) 1px, transparent 1px);
     background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 25%, transparent 78%);
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 25%, transparent 78%);
   }
 
-  /* 自定义滚动条 */
+  /* ===== 霓虹文字辉光 ===== */
+  .text-glow {
+    text-shadow:
+      0 0 18px rgba(34, 211, 238, 0.55),
+      0 0 60px rgba(59, 130, 246, 0.35);
+  }
+
+  .text-glow-soft {
+    text-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+  }
+
+  /* ===== 渐变描边卡片 ===== */
+  .grad-border {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(135deg, rgba(59, 130, 246, 0.55), rgba(34, 211, 238, 0.55)) border-box;
+  }
+
+  /* ===== 科技角标（左上 + 右下） ===== */
+  .tech-corner {
+    position: relative;
+  }
+
+  .tech-corner::before,
+  .tech-corner::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .tech-corner::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid #22d3ee;
+    border-left: 2px solid #22d3ee;
+  }
+
+  .tech-corner::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid #3b82f6;
+    border-right: 2px solid #3b82f6;
+  }
+
+  /* ===== 科技角标（hover 时显示） ===== */
+  .tech-corner-hover::before,
+  .tech-corner-hover::after {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tech-corner-hover:hover::before,
+  .tech-corner-hover:hover::after {
+    opacity: 0.85;
+  }
+
+  /* ===== 流动光线 ===== */
+  .flow-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3b82f6, #22d3ee, #3b82f6, transparent);
+    background-size: 200% 100%;
+    animation: flow 3.2s linear infinite;
+  }
+
+  /* ===== 深色玻璃拟态 ===== */
+  .glass-dark {
+    background: rgba(6, 18, 40, 0.66);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* ===== 自定义滚动条 ===== */
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: theme('colors.primary.300') transparent;
@@ -59,6 +152,16 @@
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background-color: theme('colors.primary.300');
     border-radius: 3px;
+  }
+}
+
+/* 流动光线动画 */
+@keyframes flow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 

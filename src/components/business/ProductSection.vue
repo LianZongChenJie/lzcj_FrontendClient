@@ -10,7 +10,6 @@ defineProps<{
   subtitle?: string
   products: Product[]
   type: 'self' | 'agent'
-  dark?: boolean
 }>()
 
 const showModal = ref(false)
@@ -33,37 +32,21 @@ function openImageViewer(src: string) {
   <section
     :id="type === 'self' ? 'self-products' : 'agent-products'"
     class="relative py-16 lg:py-24 overflow-hidden"
-    :class="dark ? 'bg-[#0b1e3f]' : 'bg-slate-50'"
+    :class="type === 'self' ? 'bg-white' : 'bg-slate-50'"
   >
-    <!-- 科技感背景装饰 -->
-    <div v-if="dark" class="absolute inset-0 tech-grid-dark"></div>
-    <div v-else class="absolute inset-0 tech-dots-light"></div>
-    <div
-      v-if="dark"
-      class="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-primary-500/20 blur-3xl"
-    ></div>
-    <div
-      v-if="dark"
-      class="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-blue-600/20 blur-3xl"
-    ></div>
-    <div
-      v-if="dark"
-      class="absolute -bottom-32 left-1/3 w-96 h-96 rounded-full bg-primary-400/10 blur-3xl"
-    ></div>
-    <div
-      v-if="!dark"
-      class="absolute -top-24 right-0 w-80 h-80 rounded-full bg-primary-100/60 blur-3xl"
-    ></div>
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-dots-light"></div>
+    <div class="absolute -top-24 right-0 w-80 h-80 rounded-full bg-primary-100/60 blur-3xl"></div>
+    <div class="absolute -bottom-24 left-0 w-80 h-80 rounded-full bg-cyan-100/50 blur-3xl"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SectionTitle :title="title" :subtitle="subtitle" :dark="dark" />
+      <SectionTitle :title="title" :subtitle="subtitle" />
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="product in products"
           :key="product.id"
-          class="group bg-white rounded-xl overflow-hidden border transition-shadow duration-300"
-          :class="dark ? 'border-white/10 hover:shadow-xl hover:shadow-primary-500/20' : 'border-gray-100 hover:shadow-xl'"
+          class="group rounded-xl overflow-hidden border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:shadow-glow tech-corner tech-corner-hover"
         >
           <!-- 产品图片 -->
           <div class="relative aspect-[3/2] overflow-hidden cursor-pointer" @click="openImageViewer(product.image)">
@@ -72,18 +55,23 @@ function openImageViewer(src: string) {
               :alt="product.name"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
           </div>
 
           <!-- 产品信息 -->
           <div class="p-5">
-            <h3 class="text-lg font-bold text-gray-800 mb-2">{{ product.name }}</h3>
-            <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ product.summary }}</p>
+            <h3 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition-colors">
+              {{ product.name }}
+            </h3>
+            <p class="text-sm text-gray-500 mb-4 line-clamp-2">
+              {{ product.summary }}
+            </p>
             <button
-              class="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
+              class="text-sm font-medium text-primary-600 hover:text-primary-700 inline-flex items-center gap-1 transition-colors"
               @click="openDetail(product)"
             >
-              查看详情 →
+              查看详情
+              <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </button>
           </div>
         </div>
@@ -100,7 +88,7 @@ function openImageViewer(src: string) {
         <img
           :src="currentProduct.image"
           :alt="currentProduct.name"
-          class="w-full h-48 object-cover rounded-lg mb-4"
+          class="w-full h-48 object-cover rounded-lg mb-4 ring-1 ring-primary-100"
         />
         <p class="text-gray-600 leading-relaxed mb-4">{{ currentProduct.description }}</p>
 
@@ -110,7 +98,7 @@ function openImageViewer(src: string) {
             <span
               v-for="feature in currentProduct.features"
               :key="feature"
-              class="px-3 py-1 bg-primary-50 text-primary-600 text-sm rounded-full"
+              class="px-3 py-1 bg-primary-50 text-primary-600 text-sm rounded-full border border-primary-100"
             >
               {{ feature }}
             </span>
@@ -123,7 +111,7 @@ function openImageViewer(src: string) {
             <span
               v-for="scene in currentProduct.scenarios"
               :key="scene"
-              class="px-3 py-1 bg-green-50 text-green-600 text-sm rounded-full"
+              class="px-3 py-1 bg-green-50 text-green-600 text-sm rounded-full border border-green-100"
             >
               {{ scene }}
             </span>

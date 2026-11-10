@@ -42,8 +42,12 @@ function openDetail(job: Job) {
 </script>
 
 <template>
-  <section id="careers" class="py-16 lg:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="careers" class="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-grid-light"></div>
+    <div class="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-primary-100/50 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="人才招聘" subtitle="加入我们，共创未来" />
 
       <!-- 地点筛选 -->
@@ -54,19 +58,20 @@ function openDetail(job: Job) {
         <div
           v-for="job in filteredJobs"
           :key="job.id"
-          class="group bg-white rounded-xl p-5 sm:p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 cursor-pointer"
+          class="group bg-white rounded-xl p-5 sm:p-6 border border-gray-100 hover:border-primary-200 hover:shadow-glow transition-all duration-300 cursor-pointer tech-corner tech-corner-hover"
           :class="job.urgent ? 'border-red-200 bg-red-50/30' : ''"
           @click="openDetail(job)"
         >
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
+                <span v-if="!job.urgent" class="w-1 h-1 rotate-45 bg-primary-400 shrink-0"></span>
                 <h3 class="text-lg font-bold text-gray-800 group-hover:text-primary-600 transition-colors">
                   {{ job.title }}
                 </h3>
                 <span
                   v-if="job.urgent"
-                  class="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full animate-pulse"
+                  class="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded-full border border-red-200/60 animate-pulse"
                 >
                   急聘
                 </span>
@@ -92,7 +97,7 @@ function openDetail(job: Job) {
               </div>
             </div>
             <button
-              class="shrink-0 px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors"
+              class="shrink-0 px-5 py-2 bg-gradient-to-r from-primary-600 to-cyan-500 hover:from-primary-500 hover:to-cyan-400 text-white rounded-lg text-sm font-medium tracking-wider shadow-glow-sm hover:shadow-glow transition-all duration-300"
               @click.stop="openDetail(job)"
             >
               查看详情
@@ -110,10 +115,10 @@ function openDetail(job: Job) {
     >
       <div v-if="currentJob" class="space-y-4">
         <div class="flex flex-wrap gap-2">
-          <span class="px-3 py-1 bg-primary-50 text-primary-600 text-sm rounded-full">{{ currentJob.location }}</span>
-          <span class="px-3 py-1 bg-blue-50 text-blue-600 text-sm rounded-full">{{ currentJob.department }}</span>
-          <span class="px-3 py-1 bg-green-50 text-green-600 text-sm rounded-full">{{ currentJob.type }}</span>
-          <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">招聘{{ currentJob.headcount }}人</span>
+          <span class="px-3 py-1 bg-primary-50 text-primary-600 text-sm rounded-full border border-primary-100">{{ currentJob.location }}</span>
+          <span class="px-3 py-1 bg-blue-50 text-blue-600 text-sm rounded-full border border-blue-100">{{ currentJob.department }}</span>
+          <span class="px-3 py-1 bg-green-50 text-green-600 text-sm rounded-full border border-green-100">{{ currentJob.type }}</span>
+          <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full border border-gray-200">招聘{{ currentJob.headcount }}人</span>
         </div>
 
         <div>

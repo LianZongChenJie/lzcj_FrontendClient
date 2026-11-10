@@ -31,11 +31,12 @@ onUnmounted(() => {
   >
     <button
       v-if="isVisible"
-      class="fixed bottom-8 right-8 z-40 w-12 h-12 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
+      class="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full bg-gradient-to-br from-primary-600 to-cyan-500 text-white shadow-glow hover:shadow-glow-lg hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300"
       @click="scrollToTop"
       aria-label="返回顶部"
     >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <span class="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping"></span>
+      <svg class="relative w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
       </svg>
     </button>

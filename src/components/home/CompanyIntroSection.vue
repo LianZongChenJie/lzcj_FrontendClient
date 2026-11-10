@@ -39,36 +39,48 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="company-intro" class="py-16 lg:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="company-intro" class="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-grid-light"></div>
+    <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-primary-100/60 blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-cyan-100/50 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="公司介绍" subtitle="关于我们，了解联纵宸捷" />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         <!-- 左侧图片 -->
         <div class="grid grid-cols-2 gap-4">
-          <img
+          <div
             v-for="(img, index) in intro.images"
             :key="index"
-            :src="img"
-            :alt="`公司风采${index + 1}`"
-            class="rounded-xl shadow-md w-full h-48 object-cover cursor-pointer hover:scale-[1.02] transition-transform"
+            class="group relative tech-corner tech-corner-hover rounded-xl overflow-hidden ring-1 ring-primary-100/80 hover:ring-primary-300 hover:shadow-glow cursor-pointer transition-all duration-300"
             @click="openImageViewer(img)"
-          />
+          >
+            <img
+              :src="img"
+              :alt="`公司风采${index + 1}`"
+              class="w-full h-48 object-cover group-hover:scale-[1.04] transition-transform duration-300"
+            />
+          </div>
         </div>
 
         <!-- 右侧文字 -->
         <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-4">关于联纵宸捷</h3>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-1.5 h-6 rounded-full bg-gradient-to-b from-primary-500 to-cyan-400 shadow-glow-sm"></span>
+            <h3 class="text-xl font-bold text-gray-800">关于联纵宸捷</h3>
+          </div>
 
           <div class="text-gray-600 leading-relaxed space-y-4">
             <p v-for="(p, index) in (isExpanded ? paragraphs : paragraphs.slice(0, 1))" :key="index">{{ p }}</p>
           </div>
 
           <button
-            class="mt-6 px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors"
+            class="mt-6 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-cyan-500 hover:from-primary-500 hover:to-cyan-400 text-white rounded-lg text-sm font-medium tracking-wider shadow-glow-sm hover:shadow-glow transition-all duration-300"
             @click="isExpanded = !isExpanded"
           >
-            {{ isExpanded ? '收起' : '查看更多' }}
+            {{ isExpanded ? '收起 ↑' : '查看更多 →' }}
           </button>
         </div>
       </div>

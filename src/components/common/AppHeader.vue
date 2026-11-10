@@ -105,20 +105,28 @@ onUnmounted(() => {
 <template>
   <header
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="isScrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'"
+    :class="
+      isScrolled
+        ? 'glass-dark border-b border-cyan-400/10 shadow-lg shadow-black/30'
+        : 'bg-gradient-to-b from-ink-950/80 via-ink-950/30 to-transparent'
+    "
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-[72px]">
         <!-- Logo -->
         <div
-          class="flex items-center cursor-pointer"
+          class="flex items-center cursor-pointer group"
           @click="navigateTo('/')"
         >
-          <img
-            src="/images/logo.jpg"
-            alt="联纵宸捷"
-            class="h-10 w-auto object-contain"
-          />
+          <div
+            class="bg-white/95 rounded-lg px-2 py-1.5 ring-1 ring-white/60 shadow-sm group-hover:shadow-glow-sm transition-shadow duration-300"
+          >
+            <img
+              src="/images/logo.jpg"
+              alt="联纵宸捷"
+              class="h-8 w-auto object-contain"
+            />
+          </div>
         </div>
 
         <!-- Desktop Navigation -->
@@ -129,38 +137,53 @@ onUnmounted(() => {
             class="relative group"
           >
             <button
-              class="px-5 py-2.5 rounded-lg text-base font-medium transition-colors"
+              class="relative px-5 py-2.5 rounded-lg text-sm font-medium tracking-wider transition-colors duration-200"
               :class="
                 route.path === navRoute.path
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
+                  ? 'text-cyan-300'
+                  : 'text-white/70 hover:text-white'
               "
               @click="navigateTo(navRoute.path)"
             >
               {{ navRoute.label }}
+              <span
+                class="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-gradient-to-r from-primary-400 to-cyan-300 transition-all duration-300"
+                :class="
+                  route.path === navRoute.path
+                    ? 'w-2/3 shadow-glow-sm'
+                    : 'w-0 group-hover:w-1/3'
+                "
+              ></span>
             </button>
 
             <!-- Dropdown anchors -->
             <div
               v-if="navRoute.anchors.length > 0"
-              class="absolute top-full left-0 mt-1 w-36 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+              class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
             >
-              <button
-                v-for="anchor in navRoute.anchors"
-                :key="anchor.id"
-                class="block w-full text-left px-4 py-2.5 text-base transition-colors hover:bg-primary-50 hover:text-primary-600 first:rounded-t-lg last:rounded-b-lg"
-                :class="activeAnchor === anchor.id && route.path === navRoute.path ? 'text-primary-600 bg-primary-50' : 'text-gray-600'"
-                @click="scrollToAnchor(anchor.id)"
-              >
-                {{ anchor.label }}
-              </button>
+              <div class="glass-dark rounded-xl border border-cyan-400/10 shadow-xl shadow-black/30 py-1.5 w-40">
+                <button
+                  v-for="anchor in navRoute.anchors"
+                  :key="anchor.id"
+                  class="block w-full text-left px-4 py-2.5 text-sm tracking-wider transition-colors flex items-center gap-2"
+                  :class="
+                    activeAnchor === anchor.id && route.path === navRoute.path
+                      ? 'text-cyan-300 bg-cyan-400/10 border-r-2 border-cyan-300'
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                  "
+                  @click="scrollToAnchor(anchor.id)"
+                >
+                  <span class="w-1 h-1 rotate-45 bg-current opacity-60 shrink-0"></span>
+                  {{ anchor.label }}
+                </button>
+              </div>
             </div>
           </div>
         </nav>
 
         <!-- Mobile Menu Button -->
         <button
-          class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+          class="md:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,6 +206,12 @@ onUnmounted(() => {
       </div>
     </div>
 
+    <!-- 滚动后的流动光线 -->
+    <div
+      class="absolute bottom-0 left-0 right-0 flow-line transition-opacity duration-500"
+      :class="isScrolled ? 'opacity-80' : 'opacity-0'"
+    ></div>
+
     <!-- Mobile Menu -->
     <Transition
       enter-active-class="transition duration-200 ease-out"
@@ -194,17 +223,17 @@ onUnmounted(() => {
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden bg-white border-t border-gray-100 shadow-lg"
+        class="md:hidden glass-dark border-t border-cyan-400/10 shadow-xl shadow-black/30"
       >
         <div class="px-4 py-3 space-y-1">
           <button
             v-for="navRoute in siteStore.navRoutes"
             :key="navRoute.path"
-            class="block w-full text-left px-4 py-3 rounded-lg text-lg font-medium transition-colors"
+            class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium tracking-wider transition-colors"
             :class="
               route.path === navRoute.path
-                ? 'text-primary-600 bg-primary-50'
-                : 'text-gray-700 hover:bg-gray-50'
+                ? 'text-cyan-300 bg-cyan-400/10'
+                : 'text-white/70 hover:bg-white/5 hover:text-white'
             "
             @click="navigateTo(navRoute.path)"
           >

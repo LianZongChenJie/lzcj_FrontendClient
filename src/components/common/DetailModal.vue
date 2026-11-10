@@ -60,16 +60,22 @@ onUnmounted(() => {
         >
           <div
             v-if="visible"
-            class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col"
+            class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col border border-primary-100"
           >
+            <!-- 顶部科技光线 -->
+            <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 via-cyan-400 to-primary-500 z-10"></div>
+
             <!-- 标题栏 -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-              <h3 class="text-lg font-bold text-gray-800">{{ title }}</h3>
+              <div class="flex items-center gap-3">
+                <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-primary-500 to-cyan-400 shadow-glow-sm"></span>
+                <h3 class="text-lg font-bold text-gray-800">{{ title }}</h3>
+              </div>
               <button
-                class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
+                class="w-8 h-8 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 flex items-center justify-center transition-colors"
                 @click="emit('close')"
               >
-                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>

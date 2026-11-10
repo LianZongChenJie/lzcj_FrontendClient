@@ -41,8 +41,12 @@ function openViewer(src: string) {
 </script>
 
 <template>
-  <section id="honors" class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="honors" class="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 tech-grid-light"></div>
+    <div class="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-primary-100/50 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle title="资质荣誉" subtitle="权威认证，行业认可" />
 
       <TabFilter v-model="activeTab" :tabs="tabs" />
@@ -51,7 +55,7 @@ function openViewer(src: string) {
         <div
           v-for="honor in filteredHonors"
           :key="honor.id"
-          class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+          class="group grad-border tech-corner tech-corner-hover rounded-xl overflow-hidden hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
         >
           <div
             class="relative bg-white p-4 cursor-pointer min-h-[280px] flex items-center justify-center"
@@ -60,20 +64,24 @@ function openViewer(src: string) {
             <img
               :src="honor.image"
               :alt="honor.name"
-              class="max-w-full max-h-[280px] object-contain group-hover:scale-[1.03] transition-transform duration-300"
+              class="max-w-full max-h-[280px] object-contain group-hover:scale-[1.03] group-hover:drop-shadow-[0_0_16px_rgba(59,130,246,0.35)] transition-all duration-300"
             />
             <div class="absolute top-3 right-3">
               <span
-                class="px-2 py-1 text-xs font-medium rounded-full"
-                :class="honor.type === 'qualification' ? 'bg-blue-100 text-blue-600' : 'bg-amber-100 text-amber-600'"
+                class="px-2 py-1 text-xs font-medium rounded-full border"
+                :class="
+                  honor.type === 'qualification'
+                    ? 'bg-primary-50/80 text-primary-600 border-primary-200/60'
+                    : 'bg-amber-50/80 text-amber-600 border-amber-200/60'
+                "
               >
                 {{ honor.type === 'qualification' ? '资质' : '荣誉' }}
               </span>
             </div>
           </div>
-          <div class="p-4 border-t border-gray-100">
+          <div class="p-4 border-t border-primary-100/60 bg-gray-50/60">
             <h3 class="font-semibold text-gray-800 text-sm mb-1">{{ honor.name }}</h3>
-            <p class="text-gray-400 text-xs">{{ honor.date }}年</p>
+            <p class="text-gray-400 text-xs font-mono">{{ honor.date }}年</p>
           </div>
         </div>
       </div>
